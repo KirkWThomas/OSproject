@@ -69,7 +69,7 @@ int main(int argc, char *argv[]){
         if(argc != 2 && !onePass){
             cin >> input;
         }
-        onePass = true;
+        
         int currentPosition = 0x00000000;
         State s = noob;
         int uniqueID, arrivalTime, burstTime, priority, q;
@@ -105,7 +105,7 @@ int main(int argc, char *argv[]){
                 cin >> fileName;
             }
             else{
-                fileName = argv[2];
+                fileName = argv[1];
             }
 
             ifstream inFile(fileName);
@@ -153,6 +153,7 @@ int main(int argc, char *argv[]){
             return 0;
         }
         else {cout << "Invalid Input. Try again.";}
+        onePass = true;
     }
     //cout << "Hello World";
 
