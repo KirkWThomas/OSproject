@@ -59,12 +59,12 @@ void printPCBList(list<pcb> const &theList){
     }
 }
 
-void sjf(list<pcb> &theList){
-    theList.sort(compare_arrival);
-}
-
 bool compare_arrival (const pcb& first, const pcb& second){
   return ( first.arrivalTime < second.arrivalTime );
+}
+
+void sjf(list<pcb> &theList){
+    theList.sort(compare_arrival);
 }
 
 int main(int argc, char *argv[]){
