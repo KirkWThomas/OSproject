@@ -61,14 +61,15 @@ void printPCBList(list<pcb> const &theList){
 
 
 int main(int argc, char *argv[]){
-    int input = 2;
+    int input = 10;
     bool onePass = false;
     list<pcb> allProcesses;
     while(input != 0){
-        cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl << "3. Set system q" << endl << "4. Print all PCBs" << endl;
         if(argc != 2 && !onePass){
+            cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl << "3. Set system q" << endl << "4. Print all PCBs" << endl;
             cin >> input;
         }
+        else { input = 2; }
         
         int currentPosition = 0x00000000;
         State s = noob;
