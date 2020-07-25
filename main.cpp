@@ -60,6 +60,12 @@ void printPCBList(list<pcb> const &theList){
     }
 }
 
+void printPCBList(list<pcb*> const &theList){
+    for (auto i : theList){
+        cout << *i << endl;
+    }
+}
+
 bool compare_priority (const pcb& first, const pcb& second){
   return ( first.priority < second.priority );
 }
@@ -81,22 +87,22 @@ bool compare_arrivalBurst (const pcb& first, const pcb& second){
 }
 
 void sjf(list<pcb> &theList){   //shortest job first scheduling
-    int tempComplete = 0;
+    int currentTime = 0;
     theList.sort(compare_arrivalBurst);
     cout << "Executing Processes: " << endl;
     for (auto i : theList){
         if(i.s != dead){
             i.s = ready;
             //cout << i.uniqueID << " " << i.s << endl;
-            if(i.arrivalTime > tempComplete){
+            if(i.arrivalTime > currentTime){
                 i.s = running;
                 //cout << i.uniqueID << " " << i.s << endl;
-                i.completionTime = tempComplete = i.arrivalTime + i.burstTime;
+                i.completionTime = currentTime = i.arrivalTime + i.burstTime;
             }
             else{
                 i.s = running;
                 cout << i.uniqueID << " " << i.s << endl;
-                i.completionTime = tempComplete += i.burstTime;
+                i.completionTime = currentTime += i.burstTime;
             }
             i.turnaroundTime = i.completionTime - i.arrivalTime;
             i.s = dead;
@@ -107,11 +113,18 @@ void sjf(list<pcb> &theList){   //shortest job first scheduling
 }
 
 void pnps(list<pcb> &theList){      //priority non-preemptive scheduling
-    list<pcb*> ready;
+    list<pcb*> readyQ;
+    theList.sort(compare_arrival);
+    int currentTime = 0;
     for (auto i : theList){
-        ready.push_back(&i);
-        cout << &i << endl;
+        if (i.s == noob && i.arrivalTime <= currentTime){
+            i.s = ready;
+            readyQ.push_back(&i);
+        }
+        
     }
+    readyQ.sort(compare_priority);
+    printPCBList(readyQ);
 }
 
 int main(int argc, char *argv[]){
