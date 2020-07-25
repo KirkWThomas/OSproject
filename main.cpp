@@ -41,17 +41,19 @@ ostream& operator<<(ostream& out, const pcb &n){
             out << "Process ID: " << n.uniqueID << endl;
             out << "Arrival Time: " << n.arrivalTime << endl;
             out << "Burst Time: " << n.burstTime << endl;
-            out << "Priority: " << n.priority << endl;
+            
             out << "Current Position: " << n.currentPosition << endl;
             out << "Current Registers: " << endl;
             for (auto i : n.registers){
                 //out << i << endl;
                 out << "\t" << n.registers[i] << endl;
             }
+            out << "Priority: " << n.priority << endl;
         }
 
 void printPCBList(list<pcb> const &theList){
     list<pcb>::const_iterator it;
+    
     for (it = theList.begin(); it != theList.end(); ++it){
         cout << *it << endl;
     }
