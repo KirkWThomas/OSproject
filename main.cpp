@@ -64,7 +64,6 @@ int main(int argc, char *argv[]){
     list<pcb> allProcesses;
     while(input != 0){
         cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl << "4. Print all PCBs" << endl;
-        cout << argc;
         if(argc != 2){
             cin >> input;
         }
@@ -73,16 +72,24 @@ int main(int argc, char *argv[]){
         State s = noob;
         int uniqueID, arrivalTime, burstTime, priority;
         int registers[15];
+        string temp;
 
         if (input == 1){
             cout << "Enter process ID: ";
-            cin >> uniqueID;
+            getline(cin, temp);
+            uniqueID = stoi(temp);
+
             cout << "Enter process arrival time: ";
-            cin >> arrivalTime;
+            getline(cin, temp);
+            arrivalTime = stoi(temp);
+
             cout << "Enter process burst time: ";
-            cin >> burstTime;
+            getline(cin, temp);
+            burstTime = stoi(temp);
+
             cout << "Enter priority: ";
-            cin >> priority;
+            getline(cin, temp);
+            priority = stoi(temp);
 
             pcb(uniqueID, arrivalTime, burstTime, priority);
         }
