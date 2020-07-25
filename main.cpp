@@ -43,7 +43,7 @@ ostream& operator<<(ostream& out, const pcb &n){
             out << "Burst Time: " << n.burstTime << endl;
             out << "Priority: " << n.priority << endl;
             out << "Current Position: " << n.currentPosition << endl;
-            out << "Current Registers: " << endl << "\t";
+            out << "Current Register Values: " << endl << "\t";
             for (auto i : n.registers){
                 //out << i << endl;
                 out << n.registers[i] << ", ";
@@ -51,11 +51,11 @@ ostream& operator<<(ostream& out, const pcb &n){
             out << endl;
         }
 
-void printPCBList(list<pcb> const &theList){
-    list<pcb>::const_iterator it;
+void printPCBList(list<pcb*> const &theList){
+    list<pcb*>::const_iterator it;
     
     for (it = theList.begin(); it != theList.end(); ++it){
-        cout << *it << endl;
+        cout << **it << endl;
     }
 }
 
@@ -63,7 +63,7 @@ void printPCBList(list<pcb> const &theList){
 int main(int argc, char *argv[]){
     int input = 10;
     bool onePass = false;
-    list<pcb> allProcesses;
+    list<pcb*> allProcesses;
     while(input != 0){
         if(argc != 2 | onePass){
             cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl << "3. Set system q" << endl << "4. Print all PCBs" << endl;
@@ -97,13 +97,13 @@ int main(int argc, char *argv[]){
             getline(cin, temp);
             priority = stoi(temp);
 
-            allProcesses.push_back(pcb(uniqueID, arrivalTime, burstTime, priority));
+            allProcesses.push_back(&pcb(uniqueID, arrivalTime, burstTime, priority));
         }
 
         else if (input == 2){
             string fileName;
             int line;
-            if(argc != 2 && !onePass){
+            if(argc != 2 | onePass){
                 cout << "Enter filename: ";
                 cin >> fileName;
             }
@@ -133,7 +133,7 @@ int main(int argc, char *argv[]){
                     getline(inFile, temp);
                     priority = stoi(temp);
 
-                    allProcesses.push_back(pcb(uniqueID, arrivalTime, burstTime, priority));
+                    allProcesses.push_back(&pcb(uniqueID, arrivalTime, burstTime, priority));
                     //inFile >> currentPosition;
                 }
                 inFile.close();
