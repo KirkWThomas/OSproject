@@ -36,22 +36,24 @@ class pcb{
             
         }
 
-        ostream& operator<<(ostream& out){
-            out << "Process ID: " << uniqueID << endl;
-            out << "Arrival Time: " << arrivalTime << endl;
-            out << "Burst Time: " << burstTime << endl;
-            out << "Priority: " << priority << endl;
-            out << "Current Position: " << currentPosition << endl;
-            out << "Current Registers: " << endl;
-            for (auto i : registers){
-                out << "\t" << registers[i] << endl;
-            }
-        }
+        friend ostream & operator << (ostream &out, const pcb &n);
         
 };
 
+ostream& operator<<(ostream& out, const pcb &n){
+            out << "Process ID: " << n.uniqueID << endl;
+            out << "Arrival Time: " << n.arrivalTime << endl;
+            out << "Burst Time: " << n.burstTime << endl;
+            out << "Priority: " << n.priority << endl;
+            out << "Current Position: " << n.currentPosition << endl;
+            out << "Current Registers: " << endl;
+            for (auto i : n.registers){
+                out << "\t" << n.registers[i] << endl;
+            }
+        }
+
 void printPCBList(list<pcb> const &theList){
-    for (auto const& n : theList){
+    for (auto n : theList){
         cout << n << endl;
     }
 }
@@ -61,7 +63,7 @@ int main(int argc, char *argv[]){
     int input = 2;
     list<pcb> allProcesses;
     while(input != 0){
-        cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl;
+        cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl << "4. Print all PCBs" << endl;
         cout << argc;
         if(argc != 2){
             cin >> input;
