@@ -60,6 +60,18 @@ void printPCBList(list<pcb> const &theList){
     }
 }
 
+bool compare_priority (const pcb& first, const pcb& second){
+  return ( first.priority < second.priority );
+}
+
+bool compare_burst (const pcb& first, const pcb& second){
+  return ( first.burstTime < second.burstTime );
+}
+
+bool compare_arrival (const pcb& first, const pcb& second){
+  return ( first.arrivalTime < second.arrivalTime );
+}
+
 bool compare_arrivalBurst (const pcb& first, const pcb& second){
   if ( first.arrivalTime < second.arrivalTime ) {return true;}
   if ( first.arrivalTime > second.arrivalTime ) {return false;}
@@ -68,7 +80,7 @@ bool compare_arrivalBurst (const pcb& first, const pcb& second){
   if ( first.burstTime > second.burstTime ) {return false;}
 }
 
-void sjf(list<pcb> &theList){
+void sjf(list<pcb> &theList){   //shortest job first scheduling
     int tempComplete = 0;
     theList.sort(compare_arrivalBurst);
     cout << "Executing Processes: " << endl;
@@ -94,6 +106,14 @@ void sjf(list<pcb> &theList){
     }
 }
 
+void pnps(list<pcb> &theList){      //priority non-preemptive scheduling
+    list<pcb*> ready;
+    for (auto i : theList){
+        ready.push_back(&i);
+        cout << &i << endl;
+    }
+}
+
 int main(int argc, char *argv[]){
     int input = 10;
     bool onePass = false;
@@ -102,7 +122,7 @@ int main(int argc, char *argv[]){
         if(argc != 2 | onePass){
             cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl 
             << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl 
-            << "3. Set system q" << endl << "4. Print all PCBs" << endl << "5. Run Shortest Job First" << endl;
+            << "3. Set system q" << endl << "4. Print all PCBs" << endl << "5. Run Shortest Job First Scheduling" << endl << "6. Run Priority Non-Preemptive Scheduling" << endl;
             cin >> input;
             cin.ignore();
         }
@@ -196,6 +216,7 @@ int main(int argc, char *argv[]){
 
         else if (input == 6){
             //Non-preemptive Priority scheduling (Use only 1,2,3,4 for priorities and assume 1 is the highest priority).
+            pnps(allProcesses);
         }
 
         else if (input == 0){
