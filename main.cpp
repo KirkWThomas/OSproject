@@ -43,10 +43,10 @@ ostream& operator<<(ostream& out, const pcb &n){
             out << "Burst Time: " << n.burstTime << endl;
             out << "Priority: " << n.priority << endl;
             out << "Current Position: " << n.currentPosition << endl;
-            out << "Current Registers: " << endl;
+            out << "Current Registers: " << endl << "\t";
             for (auto i : n.registers){
                 //out << i << endl;
-                out << "\t" << n.registers[i] << endl;
+                out << n.registers[i] << ", ";
             }
             out << endl;
         }
@@ -126,7 +126,7 @@ int main(int argc, char *argv[]){
                     getline(inFile, temp, ',');
                     burstTime = stoi(temp);
 
-                    getline(inFile, temp, ',');
+                    getline(inFile, temp);
                     priority = stoi(temp);
 
                     allProcesses.push_back(pcb(uniqueID, arrivalTime, burstTime, priority));
