@@ -11,7 +11,7 @@ class pcb{
         int *currentPosition;
         State s = noob;
         int uniqueID, arrivalTime, burstTime, priority;
-        int registers[15];
+        int registers[15] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
 
         pcb(int currentPos, State state, int ID, int weight, int theRegisters[15]){
             currentPosition = &currentPos;
