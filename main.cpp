@@ -78,6 +78,7 @@ int main(int argc, char *argv[]){
         string temp;
         cin.ignore();
 
+        cout << "input: " << input << endl;
         if (input == 1){
             cout << "Enter process ID: ";
             getline(cin, temp);
@@ -101,7 +102,7 @@ int main(int argc, char *argv[]){
         else if (input == 2){
             string fileName;
             int line;
-            if(argc != 2){
+            if(argc != 2 && !onePass){
                 cout << "Enter filename: ";
                 cin >> fileName;
             }
@@ -134,6 +135,7 @@ int main(int argc, char *argv[]){
                     allProcesses.push_back(pcb(uniqueID, arrivalTime, burstTime, priority));
                     //inFile >> currentPosition;
                 }
+                inFile.close();
             }
             else {
                 cout << "Invlaid Input File. Please try again.";
@@ -157,6 +159,5 @@ int main(int argc, char *argv[]){
         onePass = true;
     }
     //cout << "Hello World";
-
     return 0;
 }
