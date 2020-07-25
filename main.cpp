@@ -68,6 +68,7 @@ int main(int argc, char *argv[]){
         if(argc != 2 | onePass){
             cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl << "3. Set system q" << endl << "4. Print all PCBs" << endl;
             cin >> input;
+            cin.ignore();
         }
         else { input = 2; }
         
@@ -76,7 +77,7 @@ int main(int argc, char *argv[]){
         int uniqueID, arrivalTime, burstTime, priority, q;
         int registers[15];
         string temp;
-        cin.ignore();
+        
 
         cout << "input: " << input << endl;
         if (input == 1){
