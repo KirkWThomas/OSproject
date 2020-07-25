@@ -46,13 +46,14 @@ ostream& operator<<(ostream& out, const pcb &n){
             out << "Current Registers: " << endl;
             for (auto i : n.registers){
                 //out << i << endl;
-                //out << "\t" << n.registers[i] << endl;
+                out << "\t" << n.registers[i] << endl;
             }
         }
 
 void printPCBList(list<pcb> const &theList){
-    for (auto n : theList){
-        cout << n << endl;
+    list<pcb>::const_iterator it;
+    for (it = theList.begin(); it != theList.end(); ++it){
+        cout << *it << endl;
     }
 }
 
