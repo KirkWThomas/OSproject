@@ -59,6 +59,13 @@ void printPCBList(list<pcb> const &theList){
     }
 }
 
+void sjf(list<pcb> &theList){
+    theList.sort(compare_arrival);
+}
+
+bool compare_arrival (const pcb& first, const pcb& second){
+  return ( first.arrivalTime < second.arrivalTime );
+}
 
 int main(int argc, char *argv[]){
     int input = 10;
@@ -151,6 +158,15 @@ int main(int argc, char *argv[]){
 
         else if (input == 4){
             printPCBList(allProcesses);
+        }
+
+        else if (input == 5){
+            //shortest job first
+            sjf(allProcesses);
+        }
+
+        else if (input == 6){
+            //Non-preemptive Priority scheduling (Use only 1,2,3,4 for priorities and assume 1 is the highest priority).
         }
 
         else if (input == 0){
