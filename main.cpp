@@ -10,7 +10,7 @@ class pcb{
     public:
         int *currentPosition;
         State s = noob;
-        int uniqueID, arrivalTime, burstTime, priority;
+        int uniqueID, arrivalTime, burstTime, priority, completionTime, turnaroundTime;
         int registers[15] = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE};
 
         pcb(int currentPos, State state, int ID, int weight, int theRegisters[15]){
@@ -42,6 +42,7 @@ ostream& operator<<(ostream& out, const pcb &n){
             out << "Arrival Time: " << n.arrivalTime << endl;
             out << "Burst Time: " << n.burstTime << endl;
             out << "Priority: " << n.priority << endl;
+            out << "State: " << n.s << endl;
             out << "Current Memory Address: " << &n << endl;
             out << "Current Register Values: " << endl << "\t";
             for (auto i : n.registers){
@@ -59,12 +60,38 @@ void printPCBList(list<pcb> const &theList){
     }
 }
 
-bool compare_arrival (const pcb& first, const pcb& second){
-  return ( first.arrivalTime < second.arrivalTime );
+bool compare_arrivalBurst (const pcb& first, const pcb& second){
+  if ( first.arrivalTime < second.arrivalTime ) {return true;}
+  if ( first.arrivalTime > second.arrivalTime ) {return false;}
+
+  if ( first.burstTime < second.burstTime ) {return true;}
+  if ( first.burstTime > second.burstTime ) {return false;}
 }
 
 void sjf(list<pcb> &theList){
-    theList.sort(compare_arrival);
+    int tempComplete = 0;
+    theList.sort(compare_arrivalBurst);
+    cout << "Executing Processes: " << endl;
+    for (auto i : theList){
+        if(i.s != dead){
+            i.s = ready;
+            cout << i.uniqueID << " " << i.s << endl;
+            if(i.arrivalTime > tempComplete){
+                i.s = running;
+                cout << i.uniqueID << " " << i.s << endl;
+                i.completionTime = tempComplete = i.arrivalTime + i.burstTime;
+            }
+            else{
+                i.s = running;
+                cout << i.uniqueID << " " << i.s << endl;
+                i.completionTime = tempComplete += i.burstTime;
+            }
+            i.turnaroundTime = i.completionTime - i.arrivalTime;
+            i.s = dead;
+            cout << i.uniqueID << " " << i.s << endl;
+            printf("Process ID: %d\nArrival Time: %d\nBurst Time: %d\nCompletion Time: %d\nTurnaround Time: %d\n", i.uniqueID, i.arrivalTime, i.burstTime, i.completionTime, i.turnaroundTime);
+        }
+    }
 }
 
 int main(int argc, char *argv[]){
