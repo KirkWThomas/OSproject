@@ -89,7 +89,7 @@ int main(int argc, char *argv[]){
             getline(cin, temp);
             priority = stoi(temp);
 
-            pcb(uniqueID, arrivalTime, burstTime, priority);
+            allProcesses.push_back(pcb(uniqueID, arrivalTime, burstTime, priority));
         }
 
         else if (input == 2){
@@ -119,7 +119,7 @@ int main(int argc, char *argv[]){
                     getline(inFile, temp, ',');
                     priority = stoi(temp);
 
-                    pcb(uniqueID, arrivalTime, burstTime, priority);
+                    allProcesses.push_back(pcb(uniqueID, arrivalTime, burstTime, priority));
                     //inFile >> currentPosition;
                 }
             }
