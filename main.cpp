@@ -4,15 +4,15 @@
 #include <fstream>
 
 using namespace std;
-enum State{ready, waiting, active, finished};
+enum State{noob, ready, running, waiting, dead};
 
 class pcb{
     public:
         int *currentPosition;
-        State s = ready;
-        int uniqueID;
-        int priority;
+        State s = noob;
+        int uniqueID, arrivalTime, burstTime, priority;
         int registers[15];
+
         pcb(int currentPos, State state, int ID, int weight, int theRegisters[15]){
             currentPosition = &currentPos;
             s = state;
@@ -23,57 +23,114 @@ class pcb{
             }
             
         }
+
+        pcb(int ID, int arrival, int burst, int weight){
+            uniqueID = ID;
+            arrivalTime = arrival;
+            burstTime = burst;
+            priority = weight;
+            s = noob;
+            for (auto i : registers){
+                registers[i] = 0x00000000;
+            }
+            
+        }
+
+        ostream& operator<<(ostream& out){
+            out << "Process ID: " << uniqueID << endl;
+            out << "Arrival Time: " << arrivalTime << endl;
+            out << "Burst Time: " << burstTime << endl;
+            out << "Priority: " << priority << endl;
+            out << "Current Position: " << currentPosition << endl;
+            out << "Current Registers: " << endl;
+            for (auto i : registers){
+                out << "\t" << registers[i] << endl;
+            }
+        }
         
 };
 
+void printPCBList(list<pcb> const &theList){
+    for (auto const& n : theList){
+        cout << n << endl;
+    }
+}
 
-int main(){
-    int input = 10;
+
+int main(int argc, char *argv[]){
+    int input = 2;
     list<pcb> allProcesses;
     while(input != 0){
-        cout << "Please choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process with a file." << endl;
-        cin >> input;
-
+        cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl;
+        cout << argc;
+        if(argc != 2){
+            cin >> input;
+        }
+        
         int currentPosition = 0x00000000;
-        State s = ready;
-        int uniqueID;
-        int priority;
+        State s = noob;
+        int uniqueID, arrivalTime, burstTime, priority;
         int registers[15];
 
         if (input == 1){
             cout << "Enter process ID: ";
             cin >> uniqueID;
+            cout << "Enter process arrival time: ";
+            cin >> arrivalTime;
+            cout << "Enter process burst time: ";
+            cin >> burstTime;
             cout << "Enter priority: ";
             cin >> priority;
-            cout << "Enter process starting address: ";
-            cin >> currentPosition;
+
+            pcb(uniqueID, arrivalTime, burstTime, priority);
         }
 
         else if (input == 2){
-            string fileName;
+            string fileName, temp;
             int line;
-            cout << "Enter filename: ";
-            cin >> fileName;
+            if(argc != 2){
+                cout << "Enter filename: ";
+                cin >> fileName;
+            }
+            else{
+                fileName = argv[2];
+            }
 
             ifstream inFile(fileName);
             if (inFile.is_open()){
 
-                while (inFile >> line){
-                    uniqueID = line;
-                    inFile >> priority;
-                    inFile >> currentPosition;
+                while (!inFile.eof()){
+                    getline(inFile, temp, ',');
+                    uniqueID = stoi(temp);
+
+                    getline(inFile, temp, ',');
+                    arrivalTime = stoi(temp);
+
+                    getline(inFile, temp, ',');
+                    burstTime = stoi(temp);
+
+                    getline(inFile, temp, ',');
+                    priority = stoi(temp);
+
+                    pcb(uniqueID, arrivalTime, burstTime, priority);
+                    //inFile >> currentPosition;
                 }
             }
             else {
                 cout << "Invlaid Input File. Please try again.";
             }
         }
+
+        else if (input == 4){
+            printPCBList(allProcesses);
+        }
+
         else if (input == 0){
             return 0;
         }
         else {cout << "Invalid Input. Try again.";}
     }
-    cout << "Hello World";
+    //cout << "Hello World";
 
     return 0;
 }
