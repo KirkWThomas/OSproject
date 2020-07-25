@@ -29,7 +29,7 @@ class pcb{
             arrivalTime = arrival;
             burstTime = burst;
             priority = weight;
-            // s = noob;
+            s = noob;
             // for (auto i : registers){
             //     registers[i] = 0x00000000;
             // }
