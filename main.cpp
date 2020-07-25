@@ -11,7 +11,7 @@ class pcb{
         int *currentPosition;
         State s = noob;
         int uniqueID, arrivalTime, burstTime, priority;
-        int registers[15] = {0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0};
+        int registers[15] = {0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE};
 
         pcb(int currentPos, State state, int ID, int weight, int theRegisters[15]){
             currentPosition = &currentPos;
@@ -45,7 +45,7 @@ ostream& operator<<(ostream& out, const pcb &n){
             out << "Current Position: " << n.currentPosition << endl;
             out << "Current Registers: " << endl;
             for (auto i : n.registers){
-                out << i << endl;
+                //out << i << endl;
                 out << "\t" << n.registers[i] << endl;
             }
         }
