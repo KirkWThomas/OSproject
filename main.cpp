@@ -64,14 +64,16 @@ int main(int argc, char *argv[]){
     int input = 2;
     list<pcb> allProcesses;
     while(input != 0){
-        cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl << "4. Print all PCBs" << endl;
+        cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl 
+        << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl 
+        << "3. Set system q" << endl << "4. Print all PCBs" << endl;
         if(argc != 2){
             cin >> input;
         }
         
         int currentPosition = 0x00000000;
         State s = noob;
-        int uniqueID, arrivalTime, burstTime, priority;
+        int uniqueID, arrivalTime, burstTime, priority, q;
         int registers[15];
         string temp;
         cin.ignore();
@@ -97,7 +99,7 @@ int main(int argc, char *argv[]){
         }
 
         else if (input == 2){
-            string fileName, temp;
+            string fileName;
             int line;
             if(argc != 2){
                 cout << "Enter filename: ";
@@ -109,6 +111,12 @@ int main(int argc, char *argv[]){
 
             ifstream inFile(fileName);
             if (inFile.is_open()){
+                getline(inFile, temp, '=');
+                getline(inFile, temp);
+                q = stoi(temp);
+                cout << "q: " << q << endl;
+
+                getline(inFile, temp);  //discard next line
 
                 while (!inFile.eof()){
                     getline(inFile, temp, ',');
@@ -132,6 +140,12 @@ int main(int argc, char *argv[]){
             }
         }
 
+        else if (input == 3){
+            cout << "Please set q: ";
+            getline(cin, temp);
+            q = stoi(temp);
+        }
+
         else if (input == 4){
             printPCBList(allProcesses);
         }
@@ -144,4 +158,3 @@ int main(int argc, char *argv[]){
     //cout << "Hello World";
 
     return 0;
-}
