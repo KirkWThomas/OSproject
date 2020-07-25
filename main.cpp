@@ -30,9 +30,6 @@ class pcb{
             burstTime = burst;
             priority = weight;
             s = noob;
-            for (auto i : registers){
-            //     registers[i] = 0x00000000;
-            }
             
         }
 
