@@ -45,6 +45,7 @@ ostream& operator<<(ostream& out, const pcb &n){
             out << "Current Position: " << n.currentPosition << endl;
             out << "Current Registers: " << endl;
             for (auto i : n.registers){
+                out << i << endl;
                 out << "\t" << n.registers[i] << endl;
             }
         }
