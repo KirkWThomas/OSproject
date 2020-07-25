@@ -66,8 +66,12 @@ void printPCBList(list<pcb*> const &theList){
     }
 }
 
-bool compare_priority (const pcb first, const pcb second){
+bool compare_priority (const pcb& first, const pcb& second){
   return ( first.priority < second.priority );
+}
+
+bool compare_priority (const pcb* first, const pcb* second){
+  return ( first->priority < second->priority );
 }
 
 bool compare_burst (const pcb& first, const pcb& second){
