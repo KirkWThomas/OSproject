@@ -75,10 +75,10 @@ void sjf(list<pcb> &theList){
     for (auto i : theList){
         if(i.s != dead){
             i.s = ready;
-            cout << i.uniqueID << " " << i.s << endl;
+            //cout << i.uniqueID << " " << i.s << endl;
             if(i.arrivalTime > tempComplete){
                 i.s = running;
-                cout << i.uniqueID << " " << i.s << endl;
+                //cout << i.uniqueID << " " << i.s << endl;
                 i.completionTime = tempComplete = i.arrivalTime + i.burstTime;
             }
             else{
@@ -88,8 +88,8 @@ void sjf(list<pcb> &theList){
             }
             i.turnaroundTime = i.completionTime - i.arrivalTime;
             i.s = dead;
-            cout << i.uniqueID << " " << i.s << endl;
-            printf("Process ID: %d\nArrival Time: %d\nBurst Time: %d\nCompletion Time: %d\nTurnaround Time: %d\n", i.uniqueID, i.arrivalTime, i.burstTime, i.completionTime, i.turnaroundTime);
+            //cout << i.uniqueID << " " << i.s << endl;
+            printf("Process ID: %d\nArrival Time: %d\nBurst Time: %d\nCompletion Time: %d\nTurnaround Time: %d\n\n", i.uniqueID, i.arrivalTime, i.burstTime, i.completionTime, i.turnaroundTime);
         }
     }
 }
@@ -100,7 +100,9 @@ int main(int argc, char *argv[]){
     list<pcb> allProcesses;
     while(input != 0){
         if(argc != 2 | onePass){
-            cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl << "3. Set system q" << endl << "4. Print all PCBs" << endl;
+            cout << "\nPlease choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl 
+            << "2. Enter process(es) with a file. (command line arguments will automatically be detected on first pass)" << endl 
+            << "3. Set system q" << endl << "4. Print all PCBs" << endl << "5. Run Shortest Job First" << endl;
             cin >> input;
             cin.ignore();
         }
