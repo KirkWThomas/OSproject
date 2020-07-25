@@ -48,7 +48,7 @@ ostream& operator<<(ostream& out, const pcb &n){
                 //out << i << endl;
                 out << "\t" << n.registers[i] << endl;
             }
-            
+            out << endl;
         }
 
 void printPCBList(list<pcb> const &theList){
