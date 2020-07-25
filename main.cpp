@@ -73,6 +73,7 @@ int main(int argc, char *argv[]){
         int uniqueID, arrivalTime, burstTime, priority;
         int registers[15];
         string temp;
+        cin.ignore();
 
         if (input == 1){
             cout << "Enter process ID: ";
