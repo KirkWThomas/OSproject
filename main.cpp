@@ -34,11 +34,11 @@ int main(){
         cout << "Please choose:" << endl << "0. End Program." << endl << "1. Enter process manually." << endl << "2. Enter process with a file." << endl;
         cin >> input;
 
-        int *currentPosition = 0x00000000;
-            State s = ready;
-            int uniqueID;
-            int priority;
-            int registers[15];
+        int currentPosition = 0x00000000;
+        State s = ready;
+        int uniqueID;
+        int priority;
+        int registers[15];
 
         if (input == 1){
             cout << "Enter process ID: ";
@@ -46,7 +46,7 @@ int main(){
             cout << "Enter priority: ";
             cin >> priority;
             cout << "Enter process starting address: ";
-            cin >> *currentPosition;
+            cin >> currentPosition;
         }
 
         else if (input == 2){
@@ -61,7 +61,7 @@ int main(){
                 while (inFile >> line){
                     uniqueID = line;
                     inFile >> priority;
-                    inFile >> *currentPosition;
+                    inFile >> currentPosition;
                 }
             }
             else {
